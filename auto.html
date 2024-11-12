@@ -9,6 +9,7 @@
       var date = dt.getDate();
       var hours = dt.getHours();
       var minutes = dt.getMinutes();
+      var seconds = dt.getSeconds();
       var chimelista = [08,08,08,08,09,09,10,10,11,11,12,12,13,13,14,14,15];
       var chimelistb = [14,24,39,44,29,39,24,34,19,29,14,59,44,54,39,49,34];
       var uruudoshi = No;
@@ -28,7 +29,15 @@
       //make uruudoshi end
 
       //make next day start
-      
+      if hours >= 15{
+        if hours == 15{
+          
+        }else{
+          if uruudoshi == Yes{
+            date = 29;
+          }
+        }
+      }
     </script>
   </head>
 </html>
