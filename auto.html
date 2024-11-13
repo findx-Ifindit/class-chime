@@ -29,14 +29,26 @@
       //make uruudoshi end
 
       //make next day start
+      var nextday = No;
       if hours > 15{
         hours = 00;
         minutes = 00;
+        nextday = Yes;
       }else if hours = 15{
         if minutes > 34{
           hours = 00;
           minutes = 00;
+          nextday = Yes;
+        }else if minutes = 34{
+          if seconds > 34{
+            hours = 00;
+            minutes = 00;
+            nextday = Yes;
+          }
         }
+      }
+      if nextday = Yes{
+        
       }
     </script>
   </head>
