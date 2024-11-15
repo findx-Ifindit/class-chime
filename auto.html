@@ -108,11 +108,10 @@
       if (time1 < 10){
         time1 = "0" + time1;
       } 
-      var url = "https://rakko.tools/tools/54/?dt_0=C" + year + "-" + month + "-" + date +
+      location.href("https://rakko.tools/tools/54/?dt_0=C" + year + "-" + month + "-" + date +
           "&dt_1=" + hours + "&dt_2=" + minutes + "&dt_3=" + second + 
-          "&timezone=Asia/Tokyo&title=チャイム&on_finish=stop_counting&language=ja&bg_color=f5f6f9&name_color=3B5998&digits_color=000000&last_unit_color=FF0000&border_color=E6E6E6&border_width=1&responsive=true&bg_width=0&units=,m,s&show_units=false&share=true&";
+          "&timezone=Asia/Tokyo&title=チャイム&on_finish=stop_counting&language=ja&bg_color=f5f6f9&name_color=3B5998&digits_color=000000&last_unit_color=FF0000&border_color=E6E6E6&border_width=1&responsive=true&bg_width=0&units=,m,s&show_units=false&share=true&");
       //make chime timer url end
-      location.href(url);
     </script>
   </head>
 </html>
