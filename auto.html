@@ -2,116 +2,76 @@
 <html>
   <head>
     <script>
-      var second = 34;//秒数を指定
+      var second = 34;
       var dt = new Date();
       var year = dt.getFullYear();
-      var month = dt.getMonth()+1;
+      var month = dt.getMonth() + 1;
       var date = dt.getDate();
       var hours = dt.getHours();
       var minutes = dt.getMinutes();
       var seconds = dt.getSeconds();
-      var chimelista = [8,8,8,8,9,9,10,10,11,11,12,12,13,13,14,14,15];
-      var chimelistb = [14,24,39,44,29,39,24,34,19,29,14,59,44,54,39,49,34];
+      var chimelista = [8, 8, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15];
+      var chimelistb = [14, 24, 39, 44, 29, 39, 24, 34, 19, 29, 14, 59, 44, 54, 39, 49, 34];
       var uruudoshi = false;
-      //make uruudoshi start
-      if (month == 2){
-        if (date == 28){
-          if (year % 4){
-            uruudoshi = true;
-            if (year % 100){
-              if (year % 400){
-                uruudoshi = false;
-              }
-            }
-          }
-        }
-      }
-      //make uruudoshi end
 
-      //make next day start
+      // うるう年判定
+      if (month === 2 && date === 28) {
+        uruudoshi = (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0));
+      }
+
+      // 次の日の計算
       var nextday = false;
-      if (hours > 15){
-        hours = 00;
-        minutes = 00;
+      if (hours > 15 || (hours === 15 && (minutes > 34 || (minutes === 34 && seconds > 34)))) {
+        hours = 0;
+        minutes = 0;
         nextday = true;
-      }else if (hours == 15){
-        if (minutes > 34){
-          hours = 00;
-          minutes = 00;
-          nextday = true;
-        }else if (minutes == 34){
-          if (seconds > 34){
-            hours = 00;
-            minutes = 00;
-            nextday = true;
-          }
-        }
       }
-      if (nextday == true){
-        if (date == 30){
-        if (month == 4 || month == 6 || month == 9 || month == 11){
-          if (month != 12){
-            month = month + 1;
-          }else{
-            month = 1;
-          }
-          date = 1;
-        }else{
-          date = 31;
-        }
-      }else if (date == 31){
-        if (month != 12){
-          month = month + 1;
-        }else{
-          month = 1;
-        }
-        date = 1;
-      }else if (month == 2){
-        if (date == 28){
-          if (uruudoshi == false){
-            if (month != 12){
-              month = month + 1;
-            }else{
-              month = 1;
-            }
-            date = 1;
-          }else{
-            date = date + 1;
-          }
-        }else if (date == 29){
-          if (month != 12){
-            month = month + 1;
-          }else{
-            month = 1;
-          }
-          date = 1;
-        }
-      }
-      }
-      //make next day end
 
-      //make next chime start
-      for (i = 0;i < 17;i ++){
-        if (hours == chimelista[i]){
-          if (minutes < chimelistb[i]){
+      if (nextday) {
+        if (date === 31 || (month === 2 && !uruudoshi && date === 28)) {
+          if (month === 12) {
+            month = 1;
+            year++;
+          } else {
+            month++;
+          }
+          date = 1;
+        } else if (date === 30) {
+          if ([4, 6, 9, 11].includes(month)) {
+            month++;
+            date = 1;
+          } else {
+            date++;
+          }
+        } else {
+          date++;
+        }
+      }
+
+      // 次のチャイムの時間を計算
+      let i;
+      for (i = 0; i < chimelista.length; i++) {
+        if (hours === chimelista[i]) {
+          if (minutes < chimelistb[i]) {
             break;
           }
-        }else if (hours < chimelista[i]){
+        } else if (hours < chimelista[i]) {
           break;
         }
       }
-      //make next chime end
 
-      //make chime timer url start
+      // チャイムのタイマーURL
       var time1 = chimelista[i];
       var time2 = chimelistb[i];
-      if (time1 < 10){
+      if (time1 < 10) {
         time1 = "0" + time1;
-      } 
-      location.href("https://rakko.tools/tools/54/?dt_0=C" + year + "-" + month + "-" + date +
+      }
+      month = String(month).padStart(2, '0');
+      date = String(date).padStart(2, '0');
+
+      location.href = "https://rakko.tools/tools/54/?dt_0=C" + year + "-" + month + "-" + date +
           "&dt_1=" + hours + "&dt_2=" + minutes + "&dt_3=" + second + 
-          "&timezone=Asia/Tokyo&title=チャイム&on_finish=stop_counting&language=ja&bg_color=f5f6f9&name_color=3B5998&digits_color=000000&last_unit_color=FF0000&border_color=E6E6E6&border_width=1&responsive=true&bg_width=0&units=,m,s&show_units=false&share=true&");
-      //make chime timer url end
+          "&timezone=Asia/Tokyo&title=チャイム&on_finish=stop_counting&language=ja&bg_color=f5f6f9&name_color=3B5998&digits_color=000000&last_unit_color=FF0000&border_color=E6E6E6&border_width=1&responsive=true&bg_width=0&units=,m,s&show_units=false&share=true&";
     </script>
   </head>
 </html>
