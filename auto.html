@@ -14,61 +14,11 @@
       var chimelistb = [14, 24, 39, 44, 29, 39, 24, 34, 19, 29, 14, 59, 44, 54, 39, 49, 34];
       var uruudoshi = false;
 
-      // うるう年判定
-      if (month === 2 && date === 28) {
-        uruudoshi = (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0));
+      //if 2month 29date
+      if(month == 2 && date = 29){
+        uruudoshi = true;
       }
-
-      // 次の日の計算
-      var nextday = false;
-      if (hours > 15 || (hours === 15 && (minutes > 34 || (minutes === 34 && seconds > 34)))) {
-        hours = 0;
-        minutes = 0;
-        nextday = true;
-      }
-
-      if (nextday) {
-        if (date === 31 || (month === 2 && !uruudoshi && date === 28)) {
-          if (month === 12) {
-            month = 1;
-            year++;
-          } else {
-            month++;
-          }
-          date = 1;
-        } else if (date === 30) {
-          if ([4, 6, 9, 11].includes(month)) {
-            month++;
-            date = 1;
-          } else {
-            date++;
-          }
-        } else {
-          date++;
-        }
-      }
-
-      // 次のチャイムの時間を計算
-      let i;
-      for (i = 0; i < chimelista.length; i++) {
-        if (hours === chimelista[i]) {
-          if (minutes < chimelistb[i]) {
-            break;
-          }
-        } else if (hours < chimelista[i]) {
-          break;
-        }
-      }
-
-      // チャイムのタイマーURL
-      var time1 = chimelista[i];
-      var time2 = chimelistb[i];
-      if (time1 < 10) {
-        time1 = "0" + time1;
-      }
-      month = String(month).padStart(2, '0');
-      date = String(date).padStart(2, '0');
-
+      
       location.href = "https://rakko.tools/tools/54/?dt_0=C" + year + "-" + month + "-" + date +
           "&dt_1=" + hours + "&dt_2=" + minutes + "&dt_3=" + second + 
           "&timezone=Asia/Tokyo&title=チャイム&on_finish=stop_counting&language=ja&bg_color=f5f6f9&name_color=3B5998&digits_color=000000&last_unit_color=FF0000&border_color=E6E6E6&border_width=1&responsive=true&bg_width=0&units=,m,s&show_units=false&share=true&";
