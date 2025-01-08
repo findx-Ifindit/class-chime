@@ -1,10 +1,30 @@
+<!doctype html>
 <html>
   <head>
-    <link src="auto.css">
-    <script src="auto.js"></script>
+    <style>
+      .countdown {
+        padding: 20px;
+        text-align: center;
+        border-radius: 5px;
+        font-size: 2rem;
+        color: #fff;
+        background-color: #000;
+      }
+    </style>
   </head>
   <body>
-      <div id="countdown"></div>
-      <script src="auto.js"></script>
+    <!-- countdown -->
+    <div class="countdown">
+      <span class="countdown__time js-countdown-day">0</span>
+      <span class="countdown__unit">日</span>
+      <span class="countdown__time js-countdown-hour">00</span>
+      <span class="countdown__unit">時間</span>
+      <span class="countdown__time js-countdown-min">00</span>
+      <span class="countdown__unit">分</span>
+      <span class="countdown__time js-countdown-sec">00</span>
+      <span class="countdown__unit">秒</span>
+      <span class="countdown__time js-countdown-ms">00</span>
+    </div>
+    <!-- /countdown -->
   </body>
 </html>
