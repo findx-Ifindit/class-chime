@@ -29,7 +29,7 @@
     <script>
         const countdown = ()=>{
         const now = new Date(); //現在日時
-        const target = new Date('2025/1/9 9:29:23.5'); //対象日時
+        const target = new Date('2025/01/09 09:29:23.5'); //対象日時
         const differ = target.getTime() - now.getTime(); //残り日時
         
         const ms = Math.floor(differ); //ミリ秒
@@ -40,7 +40,7 @@
     
         document.querySelector('.js-countdown-ms').textContent = String(ms).slice(-3, -1);
         document.querySelector('.js-countdown-sec').textContent = String(sec).padStart(2, '0');
-        document.querySelector('.js-countdown-min').textContent = String(min).padStart(2, '0');
+        document.querySelector('.js-countdown-min').textContent = String(min).padStart(2, '0');s
         document.querySelector('.js-countdown-hour').textContent = String(hour).padStart(2, '0');
         document.querySelector('.js-countdown-day').textContent = String(day).padStart(2, '0');
         }
