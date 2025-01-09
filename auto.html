@@ -26,5 +26,25 @@
       <span class="countdown__time js-countdown-ms">00</span>
     </div>
     <!-- /countdown -->
+    <script>
+        const countdown = ()=>{
+        const now = new Date(); //現在日時
+        const target = new Date('2023/12/31 23:59:59'); //対象日時
+        const differ = target.getTime() - now.getTime(); //残り日時
+        
+        const ms = Math.floor(differ); //ミリ秒
+        const sec = Math.floor(differ / 1000 % 60); //秒
+        const min = Math.floor(differ / 1000 / 60 % 60); //分
+        const hour = Math.floor(differ / 1000 / 60 / 60 % 24); //時
+        const day = Math.floor(differ / 1000 / 60 / 60 / 24); //日
+    
+        document.querySelector('.js-countdown-ms').textContent = String(ms).slice(-3, -1);
+        document.querySelector('.js-countdown-sec').textContent = String(sec).padStart(2, '0');
+        document.querySelector('.js-countdown-min').textContent = String(min).padStart(2, '0');
+        document.querySelector('.js-countdown-hour').textContent = String(hour).padStart(2, '0');
+        document.querySelector('.js-countdown-day').textContent = String(day).padStart(2, '0');
+        }
+          setInterval(countdown, 1);
+    </script>
   </body>
 </html>
