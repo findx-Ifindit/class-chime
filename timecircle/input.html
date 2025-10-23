@@ -51,19 +51,19 @@
         }
         
         /* ▼▼▼ 追加したスタイル ▼▼▼ */
-        .time3-buttons ,.minutes-buttons {
+        .time3-buttons {
             display: flex; /* ボタンを横並びにする */
             gap: 10px; /* ボタン間の隙間 */
             margin-bottom: 15px; /* 他の要素とのマージンを維持 */
         }
 
-        .time3-buttons ,minutes-buttons button {
+        .time3-buttons button {
             width: 50%; /* 幅を均等に分ける (auto や flex-grow: 1 でもOK) */
             background-color: #5a6268; /* 他のボタンと色を少し変える */
             margin-bottom: 0; /* .time3-buttons でマージンを管理するので個別のマージンは不要に */
         }
         
-        .time3-buttons ,minutes-buttons button:hover {
+        .time3-buttons button:hover {
             background-color: #494f54; /* ホバー色 */
         }
         /* ▲▲▲ 追加したスタイル ▲▲▲ */
@@ -90,7 +90,7 @@
         <label for="minutes">分間 (minutes):</label>
         <input type="number" id="minutes" value="45" min="1" required>
 
-        <div class="minutes-buttons">
+        <div class="time3-buttons">
             <button type="button" onclick="setMinutes(45)">45</button>
             <button type="button" onclick="setMinutes(10)">10</button>
             <button type="button" onclick="setMinutes(80)">80</button>
