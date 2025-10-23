@@ -51,13 +51,13 @@
         }
         
         /* ▼▼▼ 追加したスタイル ▼▼▼ */
-        .time3-buttons {
+        .time3-buttons ,.minutes-buttons {
             display: flex; /* ボタンを横並びにする */
             gap: 10px; /* ボタン間の隙間 */
             margin-bottom: 15px; /* 他の要素とのマージンを維持 */
         }
 
-        .time3-buttons button {
+        .time3-buttons ,minutes-buttons button {
             width: 50%; /* 幅を均等に分ける (auto や flex-grow: 1 でもOK) */
             background-color: #5a6268; /* 他のボタンと色を少し変える */
             margin-bottom: 0; /* .time3-buttons でマージンを管理するので個別のマージンは不要に */
