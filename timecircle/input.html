@@ -72,11 +72,15 @@
         <input type="number" id="minutes" value="45" min="1" required>
 
         <label for="time3">秒 (time3):</label>
-        <input type="number" id="time3" value="0" min="0" max="59" required>
+        <input type="number" id="time3" value="33" min="0" max="59" required>
 
         <label for="color1">色1 (color1):</label>
-        <input type="color" id="color1" value="#ffffff" required> <label for="color2">色2 (color2):</label>
-        <input type="color" id="color2" value="#000000" required> <button onclick="generateLink()">リンク生成と表示</button>
+        <input type="color" id="color1" value="#ffffff" required> 
+        
+        <label for="color2">色2 (color2):</label>
+        <input type="color" id="color2" value="#000000" required> 
+        
+        <button onclick="generateLink()">リンク生成と表示</button>
 
         <div id="result-link-container">
             <p>生成されたリンク:</p>
@@ -88,7 +92,8 @@
         function generateLink() {
             const datetimeInput = document.getElementById('datetime').value;
             const minutes = document.getElementById('minutes').value;
-            const time3 = document.getElementById('time3').value;
+            let time3 = document.getElementById('time3').value; // let に変更して値を再代入可能に
+            
             // Remove the '#' from color values for the URL
             const color1 = document.getElementById('color1').value.substring(1); 
             const color2 = document.getElementById('color2').value.substring(1);
@@ -97,6 +102,10 @@
                 alert('全ての日付/時間/分間/秒を入力してください。');
                 return;
             }
+            
+            // ⭐ 修正点: time3 (秒) を強制的に2桁にする
+            // String()で文字列にし、padStart(2, '0')で2桁未満なら先頭に0を埋める
+            const paddedTime3 = String(time3).padStart(2, '0');
 
             // datetime-local input format is YYYY-MM-DDTHH:MM
             const [datePart, timePart] = datetimeInput.split('T');
@@ -105,8 +114,8 @@
 
             const baseUrl = "https://findx-ifindit.github.io/class-chime/timecircle/";
             
-            // Construct the final URL with the template parameters
-            const url = `${baseUrl}?year=${year}&month=${month}&date=${date}&minutes=${minutes}&time1=${time1}&time2=${time2}&time3=${time3}&color1=${color1}&color2=${color2}`;
+            // Construct the final URL with the template parameters (paddedTime3を使用)
+            const url = `${baseUrl}?year=${year}&month=${month}&date=${date}&minutes=${minutes}&time1=${time1}&time2=${time2}&time3=${paddedTime3}&color1=${color1}&color2=${color2}`;
 
             // Create and display the <a> tag
             const linkDisplay = document.getElementById('link-display');
