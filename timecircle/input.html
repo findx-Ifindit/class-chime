@@ -50,7 +50,7 @@
             background-color: #0056b3;
         }
         
-        /* ▼▼▼ 追加したスタイル ▼▼▼ */
+        /* ▼▼▼ time3とminutesのボタン群のスタイルは流用 ▼▼▼ */
         .time3-buttons {
             display: flex; /* ボタンを横並びにする */
             gap: 10px; /* ボタン間の隙間 */
@@ -58,15 +58,15 @@
         }
 
         .time3-buttons button {
-            width: 50%; /* 幅を均等に分ける (auto や flex-grow: 1 でもOK) */
+            width: 50%; /* 幅を均等に分ける */
             background-color: #5a6268; /* 他のボタンと色を少し変える */
-            margin-bottom: 0; /* .time3-buttons でマージンを管理するので個別のマージンは不要に */
+            margin-bottom: 0; 
         }
         
         .time3-buttons button:hover {
             background-color: #494f54; /* ホバー色 */
         }
-        /* ▲▲▲ 追加したスタイル ▲▲▲ */
+        /* ▲▲▲ time3とminutesのボタン群のスタイルは流用 ▲▲▲ */
 
         #result-link-container {
             margin-top: 20px;
@@ -97,19 +97,20 @@
             <button type="button" onclick="setMinutes(5)">5</button>
         </div>
 
-        <label for="time3">秒 (time3):</label>
-        <input type="number" id="time3" value="32" min="0" max="59" required>
+        <label for="time3">秒 (time3) - 小数可:</label>
+        <input type="number" id="time3" value="32.5" required> 
 
         <div class="time3-buttons">
-            <button type="button" onclick="setTime3(33)">33</button>
-            <button type="button" onclick="setTime3(57)">57</button>
+            <button type="button" onclick="setTime3(33.4)">33.4</button>
+            <button type="button" onclick="setTime3(57.9)">57.9</button>
             <button type="button" onclick="setTime3(0)">0</button>
+            <button type="button" onclick="setTime3(15.1)">15.1</button>
         </div>
         <label for="color1">色1 (color1):</label>
-        <input type="color" id="color1" value="#ffffff" required>  
+        <input type="color" id="color1" value="#ffffff" required> 
         
         <label for="color2">色2 (color2):</label>
-        <input type="color" id="color2" value="#1c1c1c" required>  
+        <input type="color" id="color2" value="#1c1c1c" required> 
         
         <button onclick="generateLink()">リンク生成と表示</button>
 
@@ -120,9 +121,8 @@
     </div>
 
     <script>
-        // ▼▼▼ 追加した関数 ▼▼▼
         /**
-         * time3入力欄に指定された値を設定する
+         * time3入力欄に指定された値を設定する (小数可)
          * @param {number} value - 設定する秒
          */
         function setTime3(value) {
@@ -132,25 +132,44 @@
         function setMinutes(value) {
             document.getElementById('minutes').value = value;
         }
-        // ▲▲▲ 追加した関数 ▲▲▲
 
         function generateLink() {
             const datetimeInput = document.getElementById('datetime').value;
             const minutes = document.getElementById('minutes').value;
-            let time3 = document.getElementById('time3').value; // let に変更して値を再代入可能に
+            const time3Input = document.getElementById('time3').value;
             
             // Remove the '#' from color values for the URL
-            const color1 = document.getElementById('color1').value.substring(1);  
+            const color1 = document.getElementById('color1').value.substring(1); 
             const color2 = document.getElementById('color2').value.substring(1);
 
-            if (!datetimeInput || !minutes || !time3) {
+            if (!datetimeInput || !minutes || !time3Input) {
                 alert('全ての日付/時間/分間/秒を入力してください。');
                 return;
             }
             
-            // ⭐ 修正点: time3 (秒) を強制的に2桁にする
-            // String()で文字列にし、padStart(2, '0')で2桁未満なら先頭に0を埋める
+            // time3Inputを数値としてパース
+            const fullTime3 = parseFloat(time3Input);
+
+            // time3 (整数部分): 秒
+            // Math.trunc() で小数点を切り捨てて整数部分を取得
+            const time3 = Math.trunc(fullTime3);
+            
+            // time4 (小数部分を10倍して四捨五入したもの): ミリ秒の100の位
+            let time4 = 0;
+            
+            // 小数部分が存在するかチェック (例: 32.5 - 32 = 0.5)
+            const fractionalPart = fullTime3 - time3;
+
+            if (fractionalPart !== 0) {
+                // 小数部分を10倍し、Math.round()で四捨五入してtime4とする
+                time4 = Math.round(fractionalPart * 10);
+            }
+            // time4は0から9の整数になる
+
+            // time3 (秒) を強制的に2桁にする
             const paddedTime3 = String(time3).padStart(2, '0');
+            // time4は0から9なので、1桁のままでOK（TimeCircleの仕様が不明なため、ここでは1桁のまま）
+            const paddedTime4 = time4; 
 
             // datetime-local input format is YYYY-MM-DDTHH:MM
             const [datePart, timePart] = datetimeInput.split('T');
@@ -159,8 +178,8 @@
 
             const baseUrl = "https://findx-ifoundit.github.io/class-chime/timecircle/";
             
-            // Construct the final URL with the template parameters (paddedTime3を使用)
-            const url = `${baseUrl}?year=${year}&month=${month}&date=${date}&minutes=${minutes}&time1=${time1}&time2=${time2}&time3=${paddedTime3}&color1=${color1}&color2=${color2}`;
+            // Construct the final URL with the new time4 parameter
+            const url = `${baseUrl}?year=${year}&month=${month}&date=${date}&minutes=${minutes}&time1=${time1}&time2=${time2}&time3=${paddedTime3}&time4=${paddedTime4}&color1=${color1}&color2=${color2}`;
 
             // Create and display the <a> tag
             const linkDisplay = document.getElementById('link-display');
