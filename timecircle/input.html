@@ -161,9 +161,9 @@
 
             if (fractionalPart !== 0) {
                 // 小数部分を10倍し、Math.round()で四捨五入してtime4とする
-                time4 = Math.round(fractionalPart * 10);
+                time4 = Math.round(fractionalPart * 100);
             }
-            // time4は0から9の整数になる
+            // time4は0から99の整数になる
 
             // time3 (秒) を強制的に2桁にする
             const paddedTime3 = String(time3).padStart(2, '0');
